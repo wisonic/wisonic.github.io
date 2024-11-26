@@ -32,7 +32,7 @@ function App() {
   return (
     <div className="App">
       <div className="calculator">
-        <h1>React Calculator</h1>
+        <h1>My Calculator</h1>
         {/* 显示屏 */}
         <div className="display">
           <p>{display || "0"}</p>
