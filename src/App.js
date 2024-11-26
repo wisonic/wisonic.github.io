@@ -21,14 +21,13 @@ function App() {
   // 计算结果
   const handleCalculate = () => {
     try {
-      // 使用 eval 计算（注意：eval 有潜在安全风险，仅用于演示）
-      const evalResult = eval(display);
+      // 使用 Function 构造函数解析并计算表达式
+      const evalResult = new Function(`return ${display}`)();
       setResult(evalResult);
     } catch (error) {
       setResult("Error");
     }
   };
-
   return (
     <div className="App">
       <div className="calculator">
