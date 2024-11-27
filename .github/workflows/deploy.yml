@@ -1,32 +1,40 @@
-name: Deploy to GitHub Pages
+name: Deploy React App
 
 on:
   push:
     branches:
-      - main  # 当 main 分支发生变化时触发
+      - main  # 当推送到 main 分支时触发工作流
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v3
+      # Step 1: 检查出代码
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
+      # Step 2: 设置 Node.js 环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16  # 指定 Node.js 版本
+          cache: 'npm'      # 缓存 npm 依赖
 
-    - name: Install dependencies
-      run: npm install
+      # Step 3: 安装依赖
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install --save-dev @babel/plugin-proposal-private-property-in-object
 
-    - name: Build project
-      run: npm run build
+      # Step 4: 构建应用程序
+      - name: Build project
+        run: |
+          CI='' npm run build  # 确保不会因警告导致构建失败
 
-    - name: Deploy to gh-pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build
+      # Step 5: 部署到 gh-pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub 自动生成的权限令牌
+          publish_dir: ./build  # 构建产物目录

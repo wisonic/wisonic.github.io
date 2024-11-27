@@ -1,6 +1,7 @@
 // src/App.js
 import React, { useState } from "react";
 import "./App.css";
+import { evaluate } from 'mathjs';
 
 function App() {
   // 状态管理：显示内容和当前输入值
@@ -21,13 +22,14 @@ function App() {
   // 计算结果
   const handleCalculate = () => {
     try {
-      // 使用 Function 构造函数解析并计算表达式
-      const evalResult = new Function(`return ${display}`)();
+      // 使用 mathjs 解析并计算表达式
+      const evalResult = evaluate(display);
       setResult(evalResult);
     } catch (error) {
       setResult("Error");
     }
   };
+
   return (
     <div className="App">
       <div className="calculator">
