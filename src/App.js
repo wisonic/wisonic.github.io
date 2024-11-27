@@ -33,6 +33,7 @@ function App() {
   return (
     <div className="App">
       <div className="calculator">
+        <h1>👏欢迎大佬前来视察👏</h1>
         <h1>My Calculator</h1>
         {/* 显示屏 */}
         <div className="display">
